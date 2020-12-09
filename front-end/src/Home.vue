@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="small-container">
+  <div id="home">
     <SignIn @send:signin="signIn" />
   </div>
 </template>
@@ -8,7 +8,7 @@
 import SignIn from "@/components/SignIn.vue"
 
 export default {
-  name: 'App',
+  name: 'Home',
   components: {
     SignIn
   },
