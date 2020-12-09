@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     signIn() {
-      console.log(this.user)
       this.$emit('send:signin', this.user)
     }
   }

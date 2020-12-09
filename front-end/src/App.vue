@@ -1,39 +1,28 @@
 <template>
-  <div id="app" class="small-container">
-    <SignIn @send:signin="signIn" />
+  <div id="app">
+    <router-view/>
   </div>
 </template>
 
-<script>
-import SignIn from "@/components/SignIn.vue"
-
-export default {
-  name: 'App',
-  components: {
-    SignIn
-  },
-  data() {
-    return {
-      user: {}
-    }
-  },
-  methods: {
-    async signIn(user) {
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          body: JSON.stringify(user),
-          headers: { 'Content-type': 'application/json; charset=UTF-8' },        
-        })
-        const data = await response.json()
-        console.log(data)
-      } catch(err) {
-        console.log(err)
-      }
-    }
-  }
-}
-</script>
-
 <style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
 </style>
