@@ -3,25 +3,59 @@
     <div class="day-card" v-for="(location, index) in locations" :key="index">
       <div class='top-line'>
         <div class='button-wrap'>
-          <button class="delete-button">X</button>
+          <button class="delete-button" v-on:click="deleteDay(location)">X</button>
         </div>
         <div class='title-wrap'>
-          <h1 class="location-name">{{ location.locationName }}</h1>
-          <button class="edit-button">
-            <i class="material-icons">mode_edit</i>
-          </button>
+          <input v-if="editing === location._id" v-model="newName" type="text"/>
+          <h1 v-else class="location-name">{{ location.locationName }}</h1>
+          <div v-if="editing === location._id">
+            <button v-if="editing === location._id" class="edit-button" v-on:click="editCard(newName,editing)">
+              <i class="material-icons">done</i>
+            </button>
+          </div>
+          <div v-else> 
+            <button class="edit-button" v-on:click="editThis(location)">
+              <i class="material-icons">mode_edit</i>
+            </button>
+          </div>
         </div>
-        <h3 class="header">{{ location.locationObject.daily.summary }}</h3>
       </div>
+        <h3 class="header">{{ location.locationObject.daily.summary }}</h3>
+        <days v-bind:dayData="location.locationObject.daily.data"/>
     </div>
   </div>
 </template>
 
 <script>
+import Days from "@/components/Days.vue"
+
 export default {
   name: 'WeatherCard',
+  components: {
+    Days
+  },
+  data() {
+    return {
+      editing: null,
+      newName: ''
+    }
+  },
   props: {
     locations: Array
+  },
+  methods: {
+    async deleteDay(location) {
+      const requestBody = {
+        user_id: this.$route.params.data._id,
+        id: location._id
+      }
+      this.$emit('delete:day', requestBody)
+    }, editCard(newName,id) {
+      this.$emit('edit:card', newName, id)
+      this.editing = null
+    }, editThis(location) {
+      this.editing = location._id
+    }
   }
 }
 </script>

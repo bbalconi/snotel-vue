@@ -34,7 +34,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('Connected to mLab!');
 });
-console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('./front-end/public'));
 } else {
@@ -85,7 +84,6 @@ app.post('/login', (req, res, next) => {
 
 
 app.post('/getWeather', (req, res, next) => {
-  console.log('here')
   const result = darksky
     .coordinates({ lat: req.body.lat, lng: req.body.lng })
     .exclude('minutely').get().then((data) => {
@@ -133,6 +131,7 @@ app.put('/updateCard', (req, res, next) => {
 });
 
 app.put('/updateLocationName', (req, res, next) => {
+  console.log(req.body)
     User.updateOne({
       _id: req.body.user_id,
       locations: { $elemMatch: {_id: { $eq: req.body._id } } } 
@@ -143,14 +142,15 @@ app.put('/updateLocationName', (req, res, next) => {
     res.send('Success');
 });
 
-app.post('/deleteCard', (req, res, next) => {
+app.post('/deleteDay', (req, res, next) => {
+  console.log('error?')
   User.update(
     { _id: req.body.user_id },
     { $pull: { locations: { _id: req.body.id } } },
     { safe: true }, (err, deleted) => {
     let response = {
       message: "Location deleted",
-      id: deleted._id
+      // id: _id
     };
     res.status(200).send(response)
   });

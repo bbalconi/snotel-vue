@@ -1,10 +1,11 @@
 <template>
   <div>
     <form @submit.prevent="signIn">
-      <input v-model="user.username" type="text" label="username"/> 
-      <input v-model="user.password" type="text" label="password"/> 
+      <input v-model="user.username" type="text" placeholder="username"/> 
+      <input v-model="user.password" type="password" placeholder="password"/> 
       <button>Sign In</button>
     </form>
+    <a @click="signUp">sign up</a>
   </div>
 </template>
 
@@ -22,6 +23,8 @@ export default {
   methods: {
     signIn() {
       this.$emit('send:signin', this.user)
+    }, signUp(){
+      this.$router.push({name: 'Signup'})
     }
   }
 }
