@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class='home'>
     <google-map 
+    class='map'
     @update:coords="setCoords"
     @save:coords="saveCoords"
     v-if="data" :locationData="data.locations"/>
@@ -116,3 +117,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.home {
+  margin: 0px auto; 
+  padding: 0px 1em; 
+  flex: 1 1
+}
+</style>

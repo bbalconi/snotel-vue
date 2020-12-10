@@ -1,5 +1,5 @@
 <template>
-  <div id="LandingPage">
+  <div class="landing-page">
     <SignIn @send:signin="signIn" />
   </div>
 </template>

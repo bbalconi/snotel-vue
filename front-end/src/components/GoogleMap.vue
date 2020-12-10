@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='map-wrapper'>
     <GmapMap
       ref="map"
       @mousemove="getCoords"
@@ -7,7 +7,7 @@
       :center="{lat:center.lat, lng:center.lng}"
       :zoom="12"
       map-type-id="terrain"
-      style="width: 500px; height: 300px">
+      style="margin-left: 5%; margin-right: 5%; position: relative; margin-top: 5%; width: 90%; height: 300px">
         <GmapMarker
           :key="index"
           v-for="(m, index) in markers"
@@ -24,7 +24,7 @@ import {gmapApi} from 'vue2-google-maps'
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: process.env.GOOGLE_MAPS_KEY,
+    key: 'AIzaSyCwZkE57pZxNg72QTmuajNgDQC_IK_XTy4',
     libraries: 'places'
   },
 })
@@ -87,7 +87,6 @@ export default {
           this.$refs.map.$mapPromise.then((map) => {
           const bounds = new window.google.maps.LatLngBounds();
           for (let m of this.markers) {
-              console.log(m.position)
               bounds.extend(m.position)
           }
           map.fitBounds(bounds, 15);
@@ -96,3 +95,11 @@ export default {
   }, 
 }
 </script>
+
+<style>
+.map-wrapper{
+  margin-left:auto;
+  margin-right:auto;
+  position: relative;
+}
+</style>

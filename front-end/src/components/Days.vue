@@ -2,7 +2,7 @@
   <div class="days">
     <div class="each-day" v-for="(day, i) in dayData" :key="i">
       <h2 class="title">{{dayConvertor(day, i)}}</h2>
-      <h2 class="title">{{dateConvertor(day, i)}}</h2>
+      <h2 class="title-date">{{dateConvertor(day, i)}}</h2>
       <skycon :condition="day.icon" width="150" height="75"></skycon>
       <p class="summary">{{day.summary}}</p>
       <div>
@@ -95,9 +95,16 @@ export default {
     border-radius: 5px;
   }
   .title {
+    font-size: 1.5rem;
     margin-top: .5em;
     color: #336699;
     margin-bottom: 0;
+  }
+  .title-date {
+    font-size: 1.15rem;
+    margin-top: 0px;
+    margin-bottom: .5em;
+    color: black;
   }
   .days {
     display: flex;
