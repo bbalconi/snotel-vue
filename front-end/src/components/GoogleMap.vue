@@ -1,10 +1,11 @@
 <template>
   <div>
     <GmapMap
+      ref="map"
       @mousemove="getCoords"
       @click="saveCoords"
       :center="{lat:center.lat, lng:center.lng}"
-      :zoom="7"
+      :zoom="12"
       map-type-id="terrain"
       style="width: 500px; height: 300px">
         <GmapMarker
@@ -23,15 +24,20 @@ import {gmapApi} from 'vue2-google-maps'
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCwZkE57pZxNg72QTmuajNgDQC_IK_XTy4',
+    key: process.env.GOOGLE_MAPS_KEY,
     libraries: 'places'
   },
 })
 
 export default {
   name: 'GoogleMap',
+  computed: {
+    google: gmapApi
+  },
   data() {
     return {
+      mapIsLoaded: false,
+      map: null,
       markers: [],
       center: {
         lat: 45,
@@ -76,15 +82,17 @@ export default {
       locationData: function () {
         this.markers = []
         this.setMarkers()
-      }, markers: function () {
-          const bounds = new gmapApi.maps.LatLngBounds()
-          this.markers.forEach((marker) => {
-            bounds.extend(marker.position)
-          })
-          this.$refs.gmap.$mapCreated.then((map) => {
-            map.fitBounds(bounds);
-          });
+      }, 
+      markers: function () {
+          this.$refs.map.$mapPromise.then((map) => {
+          const bounds = new window.google.maps.LatLngBounds();
+          for (let m of this.markers) {
+              console.log(m.position)
+              bounds.extend(m.position)
+          }
+          map.fitBounds(bounds, 15);
+      })
       }
-  }
+  }, 
 }
 </script>
